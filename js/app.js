@@ -3,7 +3,8 @@ require.config({
     paths: {
         app: '../app',
         jquery: '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min'
-    }
+    },
+    urlArgs: "bust="+(new Date()).getTime()
 });
 
 require(['jquery', 'app/generator'], function($, gen){
