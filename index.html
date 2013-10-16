@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>Conlang Word Generator</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script data-main="js/app" src="js/require.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Lily+Script+One' rel='stylesheet' type='text/css'>
+    </head>
+    <body class="flex-container">
+        <div id="spec" class="flex-item">
+            <h2>Rule Specification</h2>
+            <dl>
+                <dt>Vowel=aeiou</dt>
+                <dd>
+                    Selector. In another rule, Vowel will be replaced by one of
+                    a, e, i, o, or u. The names can be just about anything,
+                    except for numbers (which have a special meaning, see
+                    below).  Be careful with the names, though, as anything
+                    matching will be assumed to be a reference.  For example,
+                    if you make a rule a=q, any time you put a in another rule,
+                    it will actually output q.
+                </dd>
+                <dt>ProbI=a25b30c45</dt>
+                <dd>
+                    Example of probabilistic selectors. Default base
+                    probability is 100, so in this case a will be chosen 25%
+                    of the time, b will be chosen 30% of the time, and c 45%
+                    of the time.
+                </dd>
+                <dt>ProbII=c50</dt>
+                <dd>
+                    Another example.  This is incompletely specified, so ProbII
+                    will be c half the time, and half the time it will be blank.
+                <dt>ProbIII=a25bc</dt>
+                <dd>
+                    If there are unspecified choices, they split the remainder
+                    of the probability. In this case, a has a 25% chance, while
+                    b and c both have 37.5% (75%/2).
+                </dd>
+                <dt>ProbIV=12a2b3</dt>
+                <dd>
+                    Finally, you can change the default base probability by
+                    putting a number right after the =. a will be chosen 2/12
+                    times, b 3/12 times, and nothing the rest of the time.
+                </dd>
+                <dt>Syllable:ConsonantVowel</dt>
+                <dd>
+                    Merger. Syllable will be replaced by Consonant AND Vowel (in
+                    that order).  For example, if Consonant=tpk and Vowel=aeiou,
+                    some possible Syllables would be ta, po, ki.
+                </dd>
+                <dt>si~shi</dt>
+                <dd>
+                    Substitution.  If "si" shows up in any output, replace it
+                    with "shi". Be careful with order, as they will be applied
+                    sequentially.  If you have ty~ch and then hu~fu, tyu will
+                    become cfu.
+                </dd>
+                <dt>&gt;Syllable{100,95,90,70,50,...}</dt>
+                <dd>
+                    Output.  In this case, it is based entirely on Syllable.
+                    The numbers in the {braces} represent probability of
+                    repetition. As above, there will always be at least one
+                    Syllable.  Beyond that, there is a 95% chance of a second,
+                    then a 90% chance of a third, 70% chance of a fourth, 50%
+                    for a fifth. The (optional) ... indicates that the last
+                    probability will repeat. The chance of repetition is
+                    recalculated at every step, so there is, in this case, a
+                    1*.95*.9*.7*.5 = 30% (approx) chance of a 5-syllable word.
+                </dd>
+            </dl>   
+        </div>
+        <div id="rules" class="flex-item">
+            <textarea>
+Vowel=aiueo
+Consonant=kstnhmyrw3gzdbp
+Sylreg:ConsonantVowel
+
+Palvowel=auo
+Palcons=kstnhmrgzbp
+Sylpal:PalconsyPalvowel
+
+Out=6Sylreg4Vowel1Sylpal1
+
+>Out{100,95,90,70,50,30,20,...}
+
+si~shi
+hu~fu
+sy~sh
+ty~ch
+ti~chi
+tu~tsu
+yi~wi
+ye~we
+di~ji
+du~zu
+zi~ji
+oo~ô
+ou~ô
+uu~û</textarea>
+        </div>
+        <div id="output" class="flex-item">
+            Press Ctrl+Enter to generate.
+        </div>
+    </body>
+</html>
