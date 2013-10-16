@@ -56,7 +56,7 @@ define(function(){
             // parse out regular characters
             for( i = 0; i < this.elements.length; i++ ){
                 if( typeof this.elements[i] != "string" ) continue;
-                var chars = this.elements[i].match(/\w(\d+)?/g);
+                var chars = this.elements[i].match(/[^0-9](\d+)?/g);
                 this.elements.splice(i,1);
                 for( j = 0; j < chars.length; j++ ){
                     var basicChar = {
