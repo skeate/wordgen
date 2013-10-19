@@ -1,5 +1,6 @@
 body{
     background: url('img/squairy_light.png');
+    height: 100%;
 }
 
 h2{
@@ -28,7 +29,6 @@ body>div{
     left: 37.5%;
     padding: 0;
     width: 25%;
-    height: 50%;
 }
 
 #rules textarea{
