@@ -6,6 +6,9 @@ define(function(){
 
     Base.prototype = {
         prob: 100,
+        defMode: "split",
+        // "split" splits remaining probability amongst unspecified elements (for selection)
+        // "full" sets probability of any unspecified to 100% (for merging)
         findProb: function(){
             // see if there's a base prob
             if( prob = this.elements[0].match(/^\d+/) ){
@@ -30,20 +33,32 @@ define(function(){
                             this.elements.splice(j+1,0,undefined);
                             this.elements[j++] = choice.substr(0,idx);
                         }
+                        this.elements[j] = { field: allNames[name] };
                         // see if there's a probability after the found name
-                        prob = choice.substr(idx+name.length).match(/^\d+/);
-                        this.elements[j] = {
-                            field: allNames[name],
-                            prob: prob ? parseInt(prob[0]) / this.prob : 0
-                        };
-                        if( prob ){
+                        var rest = choice.substr(idx+name.length);
+                        var probLength = 0;
+                        if( /^\d+/.test(rest) ){
+                            prob = rest.match(/^\d+/)[0];
+                            this.elements[j].prob = parseInt(prob) / this.prob;
+                            probLength = prob.length;
                             totalProb += this.elements[j].prob;
-                        } else {
+                        }
+                        else if( /^{(\d+, ?)*(\d+|\.\.\.)}/.test(rest) ){
+                            prob = rest.match(/^{(\d+, ?)*(\d+|\.\.\.)}/)[0];
+                            probLength = prob.length;
+                            prob = prob.substring(1,prob.length-1);
+                            var probs = prob.split(',');
+                            for( var k in probs ) probs[k] = probs[k].trim() == '...' ? '...' : parseInt(probs[k].trim());
+                            this.elements[j].prob = probs;
+                            totalProb += this.elements[j].prob[0];
+                        }
+                        else {
+                            this.elements[j].prob = 0;
                             unassignedProb.push(this.elements[j]);
                         }
 
                         // if there is stuff after the name, add a new element
-                        var after = idx + name.length + (prob?prob[0].length:0);
+                        var after = idx + name.length + probLength;
                         if( after < choice.length ){
                             this.elements.splice( j+1, 0, choice.substr(after) );
                         }
@@ -77,11 +92,11 @@ define(function(){
                     this.elements.splice(i,0,basicChar);
                 }
             }
-
+            
             // assign any missing probabilities
             var leftoverprob = (1 - totalProb) / unassignedProb.length;
             for( i = 0; i < unassignedProb.length; i++ ){
-                unassignedProb[i].prob = leftoverprob;
+                unassignedProb[i].prob = this.defMode == "split" ? leftoverprob : 1;
             }
         }
     };

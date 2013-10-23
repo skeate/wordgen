@@ -53,7 +53,7 @@ define(['./selector','./merger','./output'],function(Selector, Merger, Output){
         for(i in this.selectors)this.selectors[i].parse(sortedNames,this.names);
         for(i in this.mergers)this.mergers[i].parse(sortedNames,this.names);
         try{
-            this.out.parse(this.names);
+            this.out.parse(sortedNames,this.names);
         } catch (e) {
             this.error = e.message;
         }
