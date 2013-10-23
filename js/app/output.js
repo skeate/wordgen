@@ -1,8 +1,9 @@
-define(['./base'], function(Base){
+define(['./base','./merger'], function(Base,Merger){
     function Output(o){
         Base.call(this,'',o);
     }
-    Output.prototype = new Base();
+    Output.prototype = new Merger();
+    /*
     Output.prototype.parse = function(allNames){
         var i, j;
         this.findProb();
@@ -33,5 +34,6 @@ define(['./base'], function(Base){
         }
         return out;
     };
+    */
     return Output;
 });
