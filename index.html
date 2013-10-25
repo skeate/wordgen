@@ -8,16 +8,17 @@
     <body class="flex-container">
         <div id="spec" class="flex-item">
             <h2>Rule Specification</h2>
+            <h3>Selectors</h3>
             <dl>
                 <dt>Vowel=aeiou</dt>
                 <dd>
-                    Selector. In another rule, Vowel will be replaced by one of
-                    a, e, i, o, or u. The names can be just about anything,
-                    except for numbers (which have a special meaning, see
-                    below).  Be careful with the names, though, as anything
-                    matching will be assumed to be a reference.  For example,
-                    if you make a rule a=q, any time you put a in another rule,
-                    it will actually output q.
+                    In another rule, Vowel will be replaced by one of a, e, i,
+                    o, or u. The names can be just about anything, except for
+                    numbers (which have a special meaning, see below).  Be
+                    careful with the names, though, as anything matching will
+                    be assumed to be a reference.  For example, if you make a
+                    rule a=q, any time you put a in another rule, it will
+                    actually output q.
                 </dd>
                 <dt>ProbI=a25b30c45</dt>
                 <dd>
@@ -28,13 +29,13 @@
                 </dd>
                 <dt>ProbII=c50</dt>
                 <dd>
-                    Another example.  This is incompletely specified, so ProbII
-                    will be c half the time, and half the time it will be blank.
+                    This is incompletely specified, so ProbII will be c half
+                    the time, and half the time it will be blank.
                 <dt>ProbIII=a25bc</dt>
                 <dd>
-                    If there are unspecified choices, they split the remainder
-                    of the probability. In this case, a has a 25% chance, while
-                    b and c both have 37.5% (75%/2).
+                    If there are choices without probabilities, they split the
+                    remainder of the probability. In this case, a has a 25%
+                    chance, while b and c both have 37.5% (75%/2).
                 </dd>
                 <dt>ProbIV=12a2b3</dt>
                 <dd>
@@ -42,12 +43,36 @@
                     putting a number right after the =. a will be chosen 2/12
                     times, b 3/12 times, and nothing the rest of the time.
                 </dd>
+            </dl>
+            <h3>Mergers</h3>
+            <dl>
                 <dt>Syllable:ConsonantVowel</dt>
                 <dd>
-                    Merger. Syllable will be replaced by Consonant AND Vowel (in
-                    that order).  For example, if Consonant=tpk and Vowel=aeiou,
-                    some possible Syllables would be ta, po, ki.
+                    Syllable will be replaced by Consonant AND Vowel (in that
+                    order).  For example, if Consonant=tpk and Vowel=aeiou, some
+                    possible Syllables would be ta, po, ki.
                 </dd>
+                <dt>CVmaybeC:ConsonantVowelConsonant50</dt>
+                <dd>
+                    Probabilities in mergers work a bit differently. If there
+                    is a number, it represents the preceding element's chance
+                    of inclusion. In this case, the second Consonant has a 50%
+                    chance of appearing; example outputs from CVmaybeC are tat,
+                    po, kip, kot, and pi.
+                </dd>
+                <dt>Repvowel:ConsonantVowel{100,50,...}</dt>
+                <dd>
+                    You can also specify probability lists with mergers. This
+                    allows repetition of the preceding element. The Vowel here
+                    will definitely show up once (100%), then has a continuous
+                    50% chance of repeating (due to the ...). The continous
+                    chance is optional; if this were just {100,50} then the
+                    Vowel would show up once for sure, and twice with 50%
+                    likelihood.
+                </dd>
+            </dl>
+            <h3>Other</h3>
+            <dl>
                 <dt>si~shi</dt>
                 <dd>
                     Substitution.  If "si" shows up in any output, replace it
@@ -57,19 +82,17 @@
                 </dd>
                 <dt>&gt;Syllable{100,95,90,70,50,...}</dt>
                 <dd>
-                    Output.  In this case, it is based entirely on Syllable.
-                    The numbers in the {braces} represent probability of
-                    repetition. As above, there will always be at least one
-                    Syllable.  Beyond that, there is a 95% chance of a second,
-                    then a 90% chance of a third, 70% chance of a fourth, 50%
-                    for a fifth. The (optional) ... indicates that the last
-                    probability will repeat. The chance of repetition is
-                    recalculated at every step, so there is, in this case, a
-                    1*.95*.9*.7*.5 = 30% (approx) chance of a 5-syllable word.
+                    Output. Really a special case merger; see the Merger section
+                    for details on syntax.
                 </dd>
             </dl>
             <h2>Changes</h2>
             <ul>
+                <li>
+                    v0.4 - 2013-10-22 - made repetition on mergers possible,
+                    and subsequently made output just a special case of
+                    merger.
+                </li>
                 <li>
                     v0.3 - 2013-10-17 - fixed firefox functionality, added
                     google analytics.
