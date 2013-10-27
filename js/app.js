@@ -8,7 +8,7 @@ require.config({
     urlArgs: "bust="+(new Date()).getTime()
 });
 
-require(['jquery', 'app/generator'], function($, gen){
+require(['jquery', 'cs!app/generator'], function($, gen){
     $(document).ready(function(){
         $(document).keypress(function(event){
             if( event.ctrlKey && ( event.keyCode == 10 || event.keyCode == 13 ) ){
