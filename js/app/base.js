@@ -11,6 +11,7 @@ define(function(){
         // "full" sets probability of any unspecified to 100% (for merging)
         findProb: function(){
             // see if there's a base prob
+            var prob;
             if( prob = this.elements[0].match(/^\d+/) ){
                 this.elements[0] = this.elements[0].substr(prob[0].length);
                 this.prob = parseInt(prob[0]);

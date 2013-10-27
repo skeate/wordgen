@@ -1,7 +1,8 @@
 require.config({
-    baseUrl: 'js/lib',
+    baseUrl: 'js',
     paths: {
-        app: '../app',
+        cs: 'lib/cs',
+        'coffee-script': 'lib/coffee-script',
         jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min'
     },
     urlArgs: "bust="+(new Date()).getTime()
