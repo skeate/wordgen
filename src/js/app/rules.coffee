@@ -1,7 +1,6 @@
 define [
     'cs!app/selector'
-    'cs!app/merger'
-    'cs!app/output'], (Selector, Merger, Output) ->
+    'cs!app/merger'], (Selector, Merger, Output) ->
     class Rules
         constructor: (rules) ->
             @selectors = []
@@ -40,7 +39,10 @@ define [
                     sel.parse sortedNames, @names
                 for merger in @mergers
                     merger.parse sortedNames, @names
-                @out.parse sortedNames, @names
+                if @out.parse?
+                    @out.parse sortedNames, @names
+                else
+                    @error = "No output rule."
             catch e
                 console.log e.stack
                 @error = e.message
