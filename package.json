@@ -1,0 +1,7 @@
+{
+    "name": "wordgen",
+    "version": "0.5.0",
+    "devDependencies": {
+        "requirejs": ">= 2.1.9"
+    }
+}
