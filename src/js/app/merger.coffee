@@ -7,9 +7,10 @@ define ['cs!app/base'], (Base) ->
             out = ''
             for element in @elements
                 if typeof element.prob.length != "undefined"
-                    for p in element.prob
+                    for j in [0..element.prob.length-1]
+                        p = element.prob[j]
                         prob = Math.random()
-                        j-- if p is '..'
+                        j-- if p is '...'
                         break if prob > ( p / @prob )
                         out += element.field.output()
                 else

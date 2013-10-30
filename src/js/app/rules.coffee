@@ -14,7 +14,15 @@ define [
                 # output rule
                 if rule[0] == '>'
                     outputRule = rule.substr 1
-                    if !/^(\d+)?(([^{]+{(\d+,)*(\d+|...)})+)$/.test outputRule
+                    outputCheck = /// ^
+                        (\d+)?          # base probability
+                        ([^0-9{]        # any non-number or {
+                        (\d+            # single probability
+                        |{(\d+, ?)+     # list of probabilities
+                        (\d+|\.\.\.)}   # - ending in either '...' or a number
+                        )?              # don't need probability at all
+                        )+$///          # can have multiple element/prob pairs
+                    if !outputCheck.test outputRule
                         @error = "Invalid output rule format."
                         return
                     @out = new Merger '', rule.substr 1

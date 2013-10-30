@@ -68,11 +68,12 @@ define ->
                         continue
                     prob = 0
                     if el.length > 1
-                        if el.match /[^0-9]\d+/
+                        if el.match /^[^0-9]\d+$/
                             prob = parseInt(el.substr 1) / @prob
                         else
                             probs = el.substring(2,el.length-1).split(',')
-                            prob = (if p=='...' then p else parseInt(p) for p in probs)
+                            prob = ( ( if p=='...' then p else parseInt(p) ) \
+                                for p in probs)
                     basicChar =
                         field: 
                             str: el[0],
@@ -80,6 +81,8 @@ define ->
                         prob: prob
                     if typeof basicChar.prob == 'number' and basicChar.prob > 0
                         totalProb += basicChar.prob
+                    else if basicChar.prob.length?
+                        totalProb += basicChar.prob[0]
                     else
                         unassignedProb.push basicChar
                     @elements.splice i++, 0, basicChar
