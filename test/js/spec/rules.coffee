@@ -20,6 +20,11 @@ define ['cs!app/rules','cs!app/selector'], (Rules,Selector) ->
                 temp.substitutions.should.not.deep.equal {}
                 temp.substitutions.should.have.ownProperty 'sy'
                 temp.substitutions.sy.should.equal 'sh'
+            it 'should parse mimics', ->
+                temp = new Rules ['eng<[qua zee bar]']
+                temp.mimics.length.should.equal 1
+                temp.mimics[0].name.should.equal 'eng'
+                temp.mimics[0].elements.should.deep.equal ['qua','zee','bar']
         describe 'output', ->
             before ->
                 rules = """

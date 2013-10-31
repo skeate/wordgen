@@ -22,8 +22,9 @@ require(['lib/chai'], function(chai){
         'cs!spec/base',
         'cs!spec/selector',
         'cs!spec/merger',
-        'cs!spec/rules'
-    ], function(base,selector,merger) {
+        'cs!spec/rules',
+        'cs!spec/mimic'
+    ], function() {
         if(window.mochaPhantomJS){mochaPhantomJS.run();}
         else{ mocha.run(); }
     });
