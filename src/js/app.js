@@ -5,7 +5,7 @@ require.config({
         'coffee-script': 'lib/coffee-script',
         jquery: '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min'
     },
-    urlArgs: "bust=v0.5.0"
+    urlArgs: "bust="+(new Date()).getTime()
 });
 
 require(['cs!app/generator']);

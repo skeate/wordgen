@@ -1,11 +1,13 @@
 define [
     'cs!app/selector'
-    'cs!app/merger'], (Selector, Merger, Output) ->
+    'cs!app/merger'
+    'cs!app/mimic.litcoffee'], (Selector, Merger, Mimic) ->
     class Rules
         constructor: (rules) ->
             @selectors = []
             @mergers = []
             @substitutions = []
+            @mimics = []
             @out = {}
             @names = {}
             @error = false
@@ -33,13 +35,17 @@ define [
                     @selectors.push sel
                 # merger rule
                 else if ( temp = rule.indexOf(':') ) >= 0
-                    merger = new Merger rule.substr(0,temp), rule.substr(temp+1)
+                    merger = new Merger rule.substr(0,temp), rule.substr temp+1
                     @names[rule.substr 0,temp] = merger
                     @mergers.push merger
                 # substitution rule
                 else if ( temp = rule.indexOf('~') ) >= 0
                     substitution = {}
                     @substitutions[rule.substr 0,temp] = rule.substr temp+1
+                else if ( temp = rule.indexOf('<') ) >= 0
+                    mimic = new Mimic rule.substr(0,temp), rule.substr temp+1
+                    @names[rule.substr 0,temp] = mimic
+                    @mimics.push mimic
             # sort names by length, then parse names in selectors/mergers/output
             sortedNames = Object.keys(@names).sort (a,b) -> b.length - a.length
             try
@@ -47,6 +53,8 @@ define [
                     sel.parse sortedNames, @names
                 for merger in @mergers
                     merger.parse sortedNames, @names
+                for mimic in @mimics
+                    mimic.parse()
                 if @out.parse?
                     @out.parse sortedNames, @names
                 else

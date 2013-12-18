@@ -1,7 +1,8 @@
 <!--todo: set doctype and fix up css-->
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <title>Conlang Word Generator</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <script data-main="js/app" src="js/lib/require.js"></script>
@@ -73,6 +74,27 @@
                     likelihood.
                 </dd>
             </dl>
+            <h3>Mimics</h3>
+            <dl>
+                <dt>Eng&lt;[this is a list of words]</dt>
+                <dd>
+                    <p>In another rule, Eng will be replaced with something a
+                    bit complicated. In short, it attempts to replicate the
+                    style of the words in the list. Simplest way to use it
+                    would be to have a list of words (as above), and then
+                    output the rule right after (e.g. &gt;Eng).</p>
+                    <p>In long, it builds weighted trees for each letter,
+                    so if you have a list like [that than thanks], if an a is
+                    chosen at some point, then 1/3 times it will be followed by
+                    n, and 2/3 times it will be followed by n. Longer word
+                    lists will create more complex words, though too many might
+                    not produce anything useful.</p>
+                    <p>The initial and terminal letters are somewhat special;
+                    if all words begin with t in your list, then all words in
+                    the output will as well. Similarly, if all list words end
+                    with an e, then all output words will, too.</p>
+                </dd>
+            </dl>
             <h3>Other</h3>
             <dl>
                 <dt>si~shi</dt>
@@ -90,6 +112,12 @@
             </dl>
             <h2>Changes</h2>
             <ul>
+                <li>
+                    v0.6.0 - 2013-12-18 - added basic mimic rule (hopefully will
+                    enhance in the future). also, bugfix: merger continuous
+                    repetition now works properly (again). artifact of
+                    transition to Coffeescript.
+                </li>
                 <li>
                     v0.5.0 - 2013-10-30 - mostly backend changes and some
                     bugfixes.
