@@ -1,5 +1,7 @@
 # wordgen
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/skeate/wordgen.svg)](https://greenkeeper.io/)
+
 Should perhaps come up with a better name, but it is what it is for now. wordgen
 is a word generator, useful (primarily?) for
 [conlangers.](http://en.wikipedia.org/wiki/Constructed_language)
