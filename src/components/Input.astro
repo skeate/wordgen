@@ -34,9 +34,15 @@ uu~û`
 
 <script>
   import { $spec } from '../store'
-  document.getElementById('rules-input')?.addEventListener('change', (e) => {
+  function updateSpec(e: Event) {
     if (e.target instanceof HTMLTextAreaElement) $spec.set(e.target.value)
-  })
+  }
+  const rulesInput = document.getElementById('rules-input')
+  if (rulesInput instanceof HTMLTextAreaElement) {
+    rulesInput.addEventListener('change', updateSpec)
+    rulesInput.addEventListener('keyup', updateSpec)
+    $spec.set(rulesInput.value)
+  }
 </script>
 
 <style>

@@ -5,12 +5,12 @@ export const $spec = atom('')
 
 export const $trigger = atom(0)
 
-$spec.subscribe(console.log)
-
-export const $output = batched([$trigger, $spec], (t) => {
+export const $output = batched([$trigger], (t) => {
   const spec = $spec.get()
-  console.log(spec)
-  if (spec) {
+  if (t > 0) {
+    if (!spec) {
+      return 'No rules specified.'
+    }
     const unparsedRules = spec.trim().split('\n')
     const generator = new Rules(unparsedRules)
     return generator.output()
