@@ -1,0 +1,10 @@
+<div id="output" class="flex-item"></div>
+
+<script>
+  import { $output } from '../store'
+
+  $output.subscribe((v) => {
+    const output = document.getElementById('output')
+    if (output) output.innerHTML = v
+  })
+</script>

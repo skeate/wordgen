@@ -1,0 +1,53 @@
+<div id="rules" class="flex-item">
+  <textarea id="rules-input"
+    >{
+      `
+Vowel=aiueo
+Consonant=kstnhmyrw3gzdbp
+Sylreg:ConsonantVowel
+
+Palvowel=auo
+Palcons=kstnhmrgzbp
+Sylpal:PalconsyPalvowel
+
+Out=6Sylreg4Vowel1Sylpal1
+
+>Out{100,95,90,70,50,30,20,...}
+
+si~shi
+hu~fu
+sy~sh
+ty~ch
+ti~chi
+tu~tsu
+yi~wi
+ye~we
+di~ji
+du~zu
+zi~ji
+oo~ô
+ou~ô
+uu~û`
+    }
+  </textarea>
+</div>
+
+<script>
+  import { $spec } from '../store'
+  document.getElementById('rules-input')?.addEventListener('change', (e) => {
+    if (e.target instanceof HTMLTextAreaElement) $spec.set(e.target.value)
+  })
+</script>
+
+<style>
+  #rules {
+    left: 37.5%;
+    padding: 0;
+    width: 25%;
+  }
+
+  #rules textarea {
+    width: 100%;
+    height: 100%;
+  }
+</style>

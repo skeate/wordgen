@@ -1,0 +1,22 @@
+---
+import Rules from '../components/Rules.astro'
+import Input from '../components/Input.astro'
+import Output from '../components/Output.astro'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout>
+  <Rules slot="spec" />
+  <Input slot="input" />
+  <Output slot="output" />
+</Layout>
+
+<script>
+  import { $trigger } from '../store'
+
+  document.addEventListener('keypress', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      $trigger.set($trigger.get() + 1)
+    }
+  })
+</script>
