@@ -15,7 +15,6 @@ export class Rules {
   constructor(rules: Array<string>) {
     // categorize rules, parse out names
     for (const rule of rules) {
-      console.log(rule)
       // output rule
       if (rule[0] === '>') {
         try {
